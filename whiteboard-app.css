@@ -1,0 +1,139 @@
+@charset "utf-8";
+body {
+	margin: 0 0.7em;
+	background: #fff;
+}
+
+header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	position: relative;
+	padding: 0.5em 0;
+}
+
+h1 {
+	font-size: 1em;
+}
+
+ul {
+	list-style: none;
+	padding: 4px;
+}
+
+input,
+select,
+button {
+	cursor: pointer;
+}
+
+#undo-btn,
+#redo-btn,
+#expt-op,
+#func-op {
+	-webkit-appearance: none;
+	display: inline-block;
+	width: 30px;
+	height: 30px;
+	margin-left: 0.7em;
+	padding: 0;
+	background: #fff;
+	border: 1px solid #999;
+	border-radius: 50%;
+}
+
+#undo-btn svg,
+#redo-btn svg,
+#expt-op svg,
+#func-op svg {
+	vertical-align: bottom;
+}
+
+#undo-btn svg,
+#redo-btn svg {
+	fill: #c7c7c7;
+}
+
+#undo-btn.active svg,
+#redo-btn.active svg {
+	fill: #4b4b4b;
+}
+
+#expt-menu,
+#func-menu {
+	display: none;
+	position: absolute;
+	right: 0;
+	top: 4em;
+	z-index: 999;
+	padding: 1px;
+	background: rgba(230, 234, 230, 0.9);
+	color: #009e9f;
+	font-size: 14px;
+}
+
+#expt-menu.open,
+#func-menu.open {
+	display: block;
+}
+
+#ins-img {
+	max-width: 320px;
+}
+
+.select-bg-color {
+	padding: 0.5em;
+}
+
+.select-bg-color #bg-color {
+	vertical-align: middle;
+}
+
+#download-btn {
+	display: inline-block;
+	padding: 1em;
+	color: #009e9f;
+	text-decoration: none;
+}
+
+#canvas-wrap {
+	position: relative;
+	border: 1px solid #c7c7c7;
+	background-color: #fff;
+}
+
+#whiteboard {
+	position: absolute;
+	background-color: transparent;
+}
+
+#tool-area {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: baseline;
+	padding-top: 0.5em;
+	font-size: 14px;
+}
+
+#line-thickness {
+	-webkit-appearance: none;
+	width: 4em;
+	padding: 4px;
+	border: 1px solid #999;
+	border-radius: 4px;
+	vertical-align: bottom;
+}
+
+#delete-canvas {
+	-webkit-appearance: none;
+	width: 4em;
+	padding: 4px;
+	border: 1px solid #999;
+	border-radius: 4px;
+	vertical-align: baseline;
+}
+
+footer {
+	padding: 1em 0 0.5em;
+	font-size: 14px;
+}

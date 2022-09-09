@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ja">
+	<head>
+		<meta charset="utf-8">
+		<title>ホワイトボードアプリ</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+		<meta name="description" content="Canvas APIを利用して絵を書くことができるホワイトボード風アプリです。">
+		
+		<meta property="og:title" content="ホワイトボードアプリ">
+		<meta property="og:type" content="article">
+		<meta property="og:description" content="Canvas APIを利用して絵を書くことができるホワイトボード風アプリです。">
+		<meta property="og:url" content="https://teeguchi.com/sh/whiteboard-app/">
+		<meta property="og:site_name" content="TeeGuchi">
+		<meta property="og:locale" content="ja_JP">
+		<meta property="og:image" content="https://teeguchi.com/sh/whiteboard-app/image/img_ogp_600x315.png">
+		<meta name="twitter:card" content="summary">
+		<meta name="twitter:site" content="@teeguchicom">
+		
+		<link rel="canonical" href="https://teeguchi.com/sh/whiteboard-app/">
+		<link rel="icon" href="image/siteicon_180x180.png" sizes="180x180">
+		<link rel="apple-touch-icon" href="image/siteicon_180x180.png">
+		<meta name="msapplication-TileImage" content="image/siteicon_270x270.png">
+		<link rel="stylesheet" href="whiteboard-app.css">
+	</head>
+	<body>
+		<header id="app-header">
+			<h1>ホワイトボード</h1>
+			<div class="btn-wrap">
+				<button id="undo-btn" role="button" aria-label="もとにもどす">
+					<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" style="width:16px;height:16px"><path d="M452.422 155.809c-36.6-36.713-87.875-59.612-143.837-59.578h-73.337V8.939L46.711 162.247 235.248 315.57v-86.497h73.337c19.694.033 36.924 7.799 49.906 20.658 12.868 12.99 20.634 30.212 20.667 49.914-.033 19.702-7.8 36.924-20.667 49.897-12.982 12.876-30.212 20.642-49.906 20.676H0V503.06h308.585c55.962.033 107.237-22.866 143.837-59.578 36.698-36.6 59.612-87.875 59.578-143.837.033-55.961-22.88-107.237-59.578-143.836z"/></svg>
+				</button>
+				<button id="redo-btn" role="button" aria-label="やりなおす">
+					<svg aria-hidden="true" version="1.2" width="512.013" height="512.013" viewBox="0 0 13547 13547" preserveAspectRatio="xMidYMid" fill-rule="evenodd" stroke-width="28.222" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg" style="width: 16px; height: 16px;"><defs class="ClipPathGroup"><clipPath id="a" clipPathUnits="userSpaceOnUse"><path d="M0 0h13547v13547H0z"/></clipPath></defs><g class="SlideGroup"><g class="Slide" clip-path="url(#a)"><g class="Page"><g class="Graphic"><path class="BoundingBox" fill="none" d="M0 0h13547v13547H0z"/><defs><clipPath id="b" clipPathUnits="userSpaceOnUse"><path d="M13546 0H0v13546h13546V0z"/></clipPath></defs><g clip-path="url(#b)"><path d="M1576 4122c969-971 2325-1577 3806-1576h1940V236l4988 4057-4988 4056V6061H5382c-521 0-977 206-1321 546-340 344-546 799-546 1321 0 521 206 977 546 1320 344 341 800 546 1321 547h8164v3514H5382c-1481 1-2837-604-3806-1576C605 10765-1 9408 0 7928c-1-1481 605-2837 1576-3806z"/></g></g></g></g></g></svg>
+				</button>
+				<button id="expt-op" role="button" aria-label="実験的なエフェクト">
+					<svg aria-hidden="true" version="1.1" id="_x32_" xmlns="http://www.w3.org/2000/svg" x="0" y="0" viewBox="0 0 512 512" style="width:16px;height:16px" xml:space="preserve" opacity="1"><style>.st0{fill:#4b4b4b}</style><path class="st0" d="M479.949 409.402L353.612 207.617a107.144 107.144 0 01-16.32-56.837L337.47.164 175.507 0l-.164 150.498a107.229 107.229 0 01-16.438 56.906L32.122 408.932a67.032 67.032 0 00-10.276 35.673 67.08 67.08 0 008.324 32.381 67.06 67.06 0 0058.648 34.662l334.236.352h.022c.906 0 1.364-.047 1.376-.047l-.012-.048c23.856-.47 45.702-13.521 57.318-34.426v-.024a66.942 66.942 0 008.396-32.486 67.068 67.068 0 00-10.205-35.567zm-32.393 49.112c-4.915 8.877-14.273 14.403-24.42 14.379-.106 0-.129.024-.2.024l-334.082-.365c-10.159-.012-19.542-5.549-24.432-14.45a27.744 27.744 0 01-3.481-13.498 27.81 27.81 0 014.28-14.862l126.76-201.515c14.65-23.28 22.41-50.193 22.456-77.706l.118-111.392 83.774.094-.129 111.416V150.78c0 27.442 7.725 54.308 22.28 77.578l126.325 201.784a27.992 27.992 0 014.268 14.827 27.994 27.994 0 01-3.517 13.545z" fill="#4b4b4b"/><path class="st0" d="M323.642 291.296a7.87 7.87 0 00-6.689-3.716l-121.551-.129c-2.728 0-5.268 1.387-6.703 3.704L101.504 429.72a7.939 7.939 0 00-.223 8.054 7.884 7.884 0 006.925 4.08l295.599.318a7.9 7.9 0 006.937-4.068 7.897 7.897 0 00-.234-8.03l-86.866-138.778z" fill="#4b4b4b"/></svg>
+				</button>
+				<div id="expt-menu">
+					<ul>
+						<li><input id="no-effect" name="line-effect" type='radio' value="source-over" checked><label for="no-effect"><span>効果なし</span></label></li>
+						<li><input id="xor" name="line-effect" type='radio' value="xor"><label for="xor"><span>xor</span></label></li>
+						<li><input id="overlay" name="line-effect" type='radio' value="overlay"><label for="overlay"><span>overlay</span></label></li>
+						<li><input id="darken" name="line-effect" type='radio' value="darken"><label for="darken"><span>darken</span></label></li>
+						<li><input id="lighten" name="line-effect" type='radio' value="lighten"><label for="lighten"><span>lighten</span></label></li>
+						<li><input id="color-dodge" name="line-effect" type='radio' value="color-dodge"><label for="color-dodge"><span>color-dodge</span></label></li>
+						<li><input id="color-burn" name="line-effect" type='radio' value="color-burn"><label for="color-burn"><span>color-burn</span></label></li>
+						<li><input id="hard-light" name="line-effect" type='radio' value="hard-light"><label for="hard-light"><span>hard-light</span></label></li>
+						<li><input id="soft-light" name="line-effect" type='radio' value="soft-light"><label for="soft-light"><span>soft-light</span></label></li>
+						<li><input id="difference" name="line-effect" type='radio' value="difference"><label for="differencet"><span>difference</span></label></li>
+						<li><input id="exclusion" name="line-effect" type='radio' value="exclusion"><label for="exclusion"><span>exclusion</span></label></li>
+						<li class="select-bg-color">bg: <input id="bg-color" type="color" value="#ffffff"></li>
+					</ul>
+				</div>
+				<button id="func-op" role="button" aria-label="その他のオプション">
+					<svg aria-hidden="true" version="1.1" id="_x32_" xmlns="http://www.w3.org/2000/svg" x="0" y="0" viewBox="0 0 512 512" style="width:16px;height:16px" xml:space="preserve" opacity="1"><style>.st0{fill:#4b4b4b}</style><circle class="st0" cx="55.091" cy="256" r="55.091" fill="#4b4b4b"/><circle class="st0" cx="256" cy="256" r="55.091" fill="#4b4b4b"/><circle class="st0" cx="456.909" cy="256" r="55.091" fill="#4b4b4b"/></svg>
+				</button>
+				<div id="func-menu">
+					<ul>
+						<li><input id="include-bg" type='checkbox' value="include-bg"><label for="include-bg"><span>背景色を含める</span></label></li>
+						<li><a id="download-btn" href="" download="">ダウンロード</a></li>
+						<li><input id="ins-img" type="file" accept="image/*"></li>
+					</ul>
+				</div>
+			</div>
+		</header>
+		<article id="canvas-wrap">
+			<canvas id="whiteboard" width="" height="">ホワイトボードアプリの描画領域です。Canvas要素に対応したブラウザを利用してください。</canvas>
+		</article>
+		<div id="tool-area">
+			<div>
+				<input id="line-color" type="color" value="#000000">
+				<span>／</span>
+				<select id="line-thickness">
+					<option value="1">1</option>
+					<option value="5" selected>5</option>
+					<option value="10">10</option>
+					<option value="15">15</option>
+					<option value="20">20</option>
+					<option value="25">25</option>
+				</select>
+				<span>／</span>
+			</div>
+			<div>
+				<input id="maru-line" name="line-type" type='radio' value="round" checked><label for="maru-line"><span>マル</span></label>
+				<input id="kaku-line" name="line-type" type='radio' value="square"><label for="kaku-line"><span>カク</span></label>
+				<input id="gabi-line" name="line-type" type='radio' value="butt"><label for="gabi-line"><span>ガビ</span></label>
+				<input id="dot-line" name="line-type" type='radio' value="dot"><label for="dot-line"><span>ドット</span></label>
+				<span>／</span>
+			</div>
+			<div>
+				<input id="translucent" type='checkbox' value="translucent"><label for="translucent"><span>半透明</span></label>
+				<span>／</span>
+				<input id="board-eraser" type='checkbox' value="eraser"><label for="board-eraser"><span>消しゴム</span></label>
+				<span>／</span>
+				<button id="delete-canvas" type="button"><span>削除</span></button>
+			</div>
+		</div>
+		<footer id="app-footer">
+			<small>&copy; 2022 <a href="https://teeguchi.com/">TeeGuchi</a></small>
+		</footer>
+		<script src="whiteboard-app.js"></script>
+		<!--
+			***** 使用アイコン *****
+			ICOON MONO
+			URL: https://icooon-mono.com/
+			Copyright: TopeconHeroes
+		-->
+	</body>
+</html>
