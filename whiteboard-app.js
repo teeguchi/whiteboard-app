@@ -1,3 +1,4 @@
+// ver. 1.0.1
 /**
  *  描画領域の初期設定
  */
@@ -9,7 +10,7 @@ const bw = document.body.clientWidth; // body要素の幅
 const bh = window.innerHeight - (headerH + toolH + footerH) - 2; // ウィンドウの高さ - 各領域 - ボーダー幅
 whiteboard.width = bw; // 描画領域の幅
 whiteboard.height = bh; // 描画領域の高さ
-const ctx = whiteboard.getContext('2d'); // 描画領域のコンテキスト
+const ctx = whiteboard.getContext('2d', {willReadFrequently: true}); // 描画領域のコンテキスト
 let startX = 0, startY = 0; // 開始点の座標
 
 /**
@@ -170,8 +171,12 @@ function handleStart(e) {
 		ctx.lineCap = setLine;
 		ctx.beginPath();
 		ctx.moveTo(startX, startY);
-		ctx.lineTo((startX + setThick), (startY + setThick));
+		//ctx.lineTo((startX + setThick), (startY + setThick));
+		ctx.lineTo((startX + 1), (startY + 1));
+		ctx.moveTo((startX + 1), startY);
+		ctx.lineTo(startX, (startY + 1));
 		ctx.stroke();
+		console.log(setThick);
 	}
 }
 

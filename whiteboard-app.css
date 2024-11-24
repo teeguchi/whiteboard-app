@@ -32,6 +32,7 @@ button {
 #expt-op,
 #func-op {
 	-webkit-appearance: none;
+	appearance: none;
 	display: inline-block;
 	width: 30px;
 	height: 30px;
@@ -117,6 +118,7 @@ button {
 
 #line-thickness {
 	-webkit-appearance: none;
+	appearance: none;
 	width: 4em;
 	padding: 4px;
 	border: 1px solid #999;
@@ -126,6 +128,7 @@ button {
 
 #delete-canvas {
 	-webkit-appearance: none;
+	appearance: none;
 	width: 4em;
 	padding: 4px;
 	border: 1px solid #999;
