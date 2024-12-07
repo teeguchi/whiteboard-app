@@ -1,4 +1,4 @@
-// ver. 1.0.2
+// ver. 1.0.3
 /**
  *  描画領域の初期設定
  */
@@ -12,6 +12,7 @@ whiteboard.width = bw; // 描画領域の幅
 whiteboard.height = bh; // 描画領域の高さ
 const ctx = whiteboard.getContext('2d', {willReadFrequently: true}); // 描画領域のコンテキスト
 let startX = 0, startY = 0; // 開始点の座標
+let isTap = false; // タップの状態
 
 /**
  * 背景領域の初期設定
@@ -36,6 +37,7 @@ if (window.ontouchstart === undefined) {
 	whiteboard.addEventListener('mousedown', handleStart);
 	whiteboard.addEventListener('mouseup', handleEnd);
 	whiteboard.addEventListener('mousemove', handleMove);
+	whiteboard.addEventListener('mouseleave', handleCancel);
 } else {
 	// タッチイベント
 	whiteboard.addEventListener('touchstart', handleStart);
@@ -131,6 +133,8 @@ function handleStart(e) {
 	const cRect = e.target.getBoundingClientRect(); // 相対位置
 	startX = e.pageX - cRect.left;
 	startY = e.pageY - cRect.top;
+
+	isTap = true; // タップ開始
 	
 	ctx.lineWidth = setThick; // 太さの設定
 	
@@ -176,7 +180,6 @@ function handleStart(e) {
 		ctx.moveTo((startX + 1), startY);
 		ctx.lineTo(startX, (startY + 1));
 		ctx.stroke();
-		console.log(setThick);
 	}
 }
 
@@ -187,6 +190,7 @@ function handleEnd(e) {
 	undoBtn.classList.add('active'); // アンドゥの有効化
 	redoAry = []; // リドゥ配列の初期化
 	redoBtn.classList.remove('active'); // リドゥの無効化
+	isTap = false; // タップ終了
 }
 
 // マウスムーブ（タッチムーブ）
@@ -201,7 +205,7 @@ function handleMove(e) {
 		e = e.changedTouches[0];
 	}
 	
-	if (e.buttons !== 0) {
+	if (e.buttons !== 0 && isTap === true) {
 		const cRect = e.target.getBoundingClientRect(); // 相対位置
 		const x = e.pageX - cRect.left;
 		const y = e.pageY - cRect.top;
@@ -228,6 +232,7 @@ function handleMove(e) {
 // タッチキャンセル
 function handleCancel(e) {
 	e.preventDefault(); // 規定の動作を抑止する
+	isTap = false; // タップ終了
 }
 
 /**
